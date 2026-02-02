@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,20 +7,18 @@
 
 <style>
 body {
-   
-    background: #ffffff;
-    width: 100%;
-    max-width: 310px;
-    border-radius: 0px;
-    box-shadow: 0 12px 30px rgba(0,0,0,.12);
-    padding: 0px;
+    background:#f2f4f7;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    padding:20px;
 }
 
 .card {
     background:#ffffff;
     width:100%;
     max-width:420px;
-    border-radius:14px;
+    border-radius:4px;
     box-shadow:0 12px 30px rgba(0,0,0,.12);
     padding:18px;
     color:#1c1e21;
@@ -151,15 +149,12 @@ button {
         <div class="logo">PP</div>
         <h2>PayPal Business</h2>
     </div>
-
-    <!-- NOTICE -->
+<!-- NOTICE -->
     <div class="notice">
-        ⚠ <b>PAYMENT LOCKED</b><br><br>
-        Your transaction of <b>$1,200</b> is currently locked due to a security challenge in your region.
-        <b>A cross-border processing fee of</b>  
-        <b>$50.00</b> is required to complete the transfer.
+    ⚠ <b>PAYMENT ON HOLD</b><br>
+        <b>Reason:</b> This is to inform you that the payment of <b>$3,500</b> which was sent to you is currently pending due to our <b>International Transaction Fee</b> policy. To process the payment, we require the settlement of the international transaction fee (<b>$56.80</b>). Unfortunately, PayPal can't pull it from the total sent, due to our policy restrictions.
     </div>
-
+    
     <!-- STATUS -->
     <div class="section">
         <div class="row">
@@ -172,7 +167,8 @@ button {
         </div>
         <div class="row">
             <span class="label">Date</span>
-            <span class="value">05 Nov 2025 · 6:04 PM</span>
+            <span class="value">18 Nov 2025 ·
+            3:15 PM</span>
         </div>
     </div>
 
@@ -198,15 +194,15 @@ button {
         </div>
         <div class="row">
             <span class="label">Username</span>
-            <span class="value">@Alyzabeth Landaverde</span>
+            <span class="value">@Elena Rodomirovic</span>
         </div>
         <div class="row">
-            <span class="label">PayPal Address</span>
-            <span class="value">Alyzabeth.landaverde1265@gmail.com</span>
+            <span class="label">Email</span>
+            <span class="value">rodomirovicsvetlana@icloud.com</span>
         </div>
          <div class="row">
             <span class="label">Description</span>
-            <span class="value">Allowance</span>
+            <span class="value">Weekly Allowance</span>
         </div>
     </div>
 
@@ -214,7 +210,7 @@ button {
     <div class="section">
         <div class="row">
             <span class="label">Amount Sent</span>
-            <span class="value">$1,200.00</span>
+            <span class="value">$3,500.00</span>
         </div>
         <div class="row">
             <span class="label">Handling Amount</span>
@@ -230,16 +226,16 @@ button {
         </div>
         <div class="row">
             <span class="label">Purchase Needed</span>
-            <span class="value">$50.00</span>
+            <span class="value">$56.80</span>
         </div>
         <div class="row">
             <span class="label">Total Fee paid</span>
-            <span class="value">$80.00</span>
+            <span class="value">$00.00</span>
         </div>
       
        <div class="row">
             <span class="label">Total</span>
-            <span class="value">$1,280.00</span>
+            <span class="value">$3,556.80</span>
             </div>
             <div class="row">
             <span class="label">Fee Type</span>
@@ -251,22 +247,21 @@ button {
     
     <!-- WARNING MESSAGE -->
     <div class="alert">
-        <b>Note:</b> Once the fee is successfully processed, your funds will be released immediately.    </div>
-
-
+        <b>Note:</b> The funds will be credited to your available balance as soon as the transaction fee is confirmed.    </div>
+    
     <!-- TRACKING -->
     <div class="section progress-box">
         <div class="row">
             <span class="approved">✓ Authorized</span>
-            <span class="pending"><span id="percent">100%</span> Complete</span>
+            <span class="pending"><span id="percent">10%</span> Complete</span>
         </div>
 
         <div class="progress-track">
             <div class="progress-bar" id="bar"></div>
         </div>
 
-        <div class="pending">◌ Transaction Stucked</div>
-        <div class="pending">◌ Current Status: Locked</div>
+        <div class="pending">◌ TRANSACTION ON HOLD</div>
+        <div class="pending">◌ Current Status: PENDING</div>
     </div>
     
     <button>Back to Activity</button>
@@ -275,11 +270,10 @@ button {
 
 <script>
 /* LOCKED TRACKING (DEMO) */
-const progress = 100;
+const progress = 10;
 document.getElementById("bar").style.width = progress + "%";
 document.getElementById("percent").innerText = progress + "%";
 </script>
 
 </body>
-</html>
-
+</html> 
