@@ -2,278 +2,344 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Payment Status Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transaction Tracker</title>
 
 <style>
-body {
-    background:#f2f4f7;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    padding:20px;
+/* =====================
+   BASE (LIGHT MODE)
+   ===================== */
+body{
+    margin:0;
+    padding:0;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:#f5f7fa;
+    color:#111827;
+    transition:background .3s,color .3s;
 }
 
-.card {
+/* CARD */
+.card{
     background:#ffffff;
-    width:100%;
     max-width:420px;
-    border-radius:4px;
-    box-shadow:0 12px 30px rgba(0,0,0,.12);
-    padding:18px;
-    color:#1c1e21;
+    margin:30px auto;
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
 }
 
 /* HEADER */
-.header {
+.header{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
     margin-bottom:16px;
 }
-
-.logo {
+.logo{
     width:38px;
     height:38px;
     border-radius:50%;
     background:#003087;
     color:#fff;
-    font-weight:bold;
+    font-weight:700;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:14px;
 }
-
-.header h2 {
-    font-size:16px;
+.header h2{
     margin:0;
+    font-size:18px;
+    color:#003087;
 }
 
-/* NOTICE */
-.notice {
+/* ALERT / WARNING */
+.alert{
     background:#fff4e5;
-    border:1px solid #ffb020;
-    padding:12px;
-    border-radius:10px;
-    font-size:13px;
-    line-height:1.5;
-    margin-bottom:16px;
+    border-left:4px solid #f59e0b;
+    padding:14px;
+    border-radius:8px;
+    font-size:14px;
+    margin-bottom:18px;
 }
 
 /* SECTIONS */
-.section {
-    border-top:1px solid #e5e7eb;
-    padding:12px 0;
-    font-size:14px;
-}
+.section{ margin-top:18px; }
 
-.row {
+.row{
     display:flex;
     justify-content:space-between;
-    margin:6px 0;
+    padding:10px 0;
+    border-bottom:1px solid #e5e7eb;
+    font-size:14px;
 }
+.row:last-child{ border-bottom:none; }
 
-.label {
-    color:#6b7280;
-}
-
-.value {
-    font-weight:600;
-}
+.label{ color:#6b7280; }
+.value{ font-weight:600; }
 
 /* STATUS */
-.approved {
-    color:#16a34a;
-    font-weight:700;
-}
-
-.pending {
-    color:#d97706;
-    font-weight:700;
-    animation: blink 1.3s infinite;
-}
-
-@keyframes blink {
-    0% {opacity:.4}
-    50% {opacity:1}
-    100% {opacity:.4}
-}
+.approved{ color:#16a34a; font-weight:600; }
+.pending{ color:#f59e0b; font-weight:600; }
 
 /* PROGRESS */
-.progress-box {
-    margin-top:10px;
-}
+.progress-box{ margin-top:20px; }
 
-.progress-track {
+.progress-track{
     width:100%;
     height:10px;
     background:#e5e7eb;
-    border-radius:20px;
+    border-radius:10px;
     overflow:hidden;
-    margin-top:6px;
+    margin:10px 0 14px;
 }
-
-.progress-bar {
+.progress-bar{
     height:100%;
-    width:25%;
-    background:linear-gradient(90deg,#0070e0,#003087);
-    animation: pulse 1s infinite alternate;
+    width:10%;
+    background:linear-gradient(90deg,#2563eb,#1d4ed8);
+    animation:pulse 1.2s infinite;
 }
 
-@keyframes pulse {
-    from {opacity:.6}
-    to {opacity:1}
+/* SPINNER ROW */
+.spinner-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 12px;
+    background:#f3f4f6;
+    border-radius:8px;
+    margin-top:8px;
+}
+.spinner-ring{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:3px solid rgba(37,99,235,.3);
+    border-top-color:#2563eb;
+    animation:spin 1s linear infinite;
 }
 
 /* BUTTON */
-button {
+button{
     width:100%;
-    padding:12px;
-    margin-top:16px;
-    border:none;
-    border-radius:10px;
-    background:#0070e0;
+    padding:14px;
+    background:#2563eb;
     color:#fff;
+    border:none;
+    border-radius:999px;
     font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+button.processing{
+    background:#f59e0b;
+    color:#111827;
+    cursor:not-allowed;
+}
+.btn-spinner{
+    width:16px;
+    height:16px;
+    border:2px solid rgba(255,255,255,.4);
+    border-top-color:#fff;
+    border-radius:50%;
+    display:none;
+    animation:spin .8s linear infinite;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(-20px);
+    background:#111827;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:10px;
+    font-size:14px;
+    opacity:0;
+    pointer-events:none;
+    transition:.4s ease;
+    z-index:999;
+}
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* ANIMATIONS */
+@keyframes spin{ to{ transform:rotate(360deg);} }
+@keyframes pulse{
+    0%{opacity:.6;}
+    50%{opacity:1;}
+    100%{opacity:.6;}
+}
+
+/* =====================
+   SYSTEM DARK MODE
+   ===================== */
+@media (prefers-color-scheme: dark){
+    body{
+        background:#020617;
+        color:#e5e7eb;
+    }
+    .card{
+        background:#020617;
+        box-shadow:0 12px 30px rgba(0,0,0,.6);
+    }
+    .header h2{ color:#93c5fd; }
+    .alert{
+        background:#3b2f1c;
+        border-left-color:#fbbf24;
+        color:#fde68a;
+    }
+    .row{ border-bottom:1px solid #1e293b; }
+    .label{ color:#9ca3af; }
+    .value{ color:#f1f5f9; }
+    .spinner-row{ background:#020617; }
+    .progress-track{ background:#1e293b; }
+    .toast{ background:#020617; }
+    button{ background:#3b82f6; }
+    button.processing{
+        background:#fbbf24;
+        color:#020617;
+    }
 }
 </style>
 </head>
 
 <body>
 
+
+
 <div class="card">
 
-    <!-- HEADER -->
     <div class="header">
         <div class="logo">PP</div>
-        <h2>PayPal Business</h2>
+        <h2>Payment Status</h2>
     </div>
-<!-- NOTICE -->
-    <div class="notice">
-    ⚠ <b>PAYMENT ON HOLD</b><br>
-        <b>Reason:</b> This is to inform you that the payment of <b>$3,500</b> which was sent to you is currently pending due to our <b>International Transaction Fee</b> policy. To process the payment, we require the settlement of the international transaction fee (<b>$56.80</b>). Unfortunately, PayPal can't pull it from the total sent, due to our policy restrictions.
+
+    <div class="alert">
+        ⏳ <b>TRANSACTION OF <b>$2,000</b> IN PROGRESS</b><br><br>
+        <b>Note:</b> We'll send the recipient an email once the transaction is completed, but it may be quicker to share this link with them. </div>
+
+    <!-- PAYMENT METHOD -->
+    <div class="section">
+        <div class="row"><span class="label">Payment Method</span><span class="value">Bank Transfer</span></div>
+        <div class="row"><span class="label">Checking</span><span class="value">XXXX-0985</span></div>
+        <div class="row"><span class="label">Transaction ID</span><span class="value">TXN-KPKGNV7N7</span></div>
     </div>
-    
+
     <!-- STATUS -->
     <div class="section">
         <div class="row">
             <span class="label">Status</span>
-            <span class="approved">✓ PAYMENT APPROVED OK</span>
+            <span class="pending" id="statusText">PENDING</span>
         </div>
         <div class="row">
-            <span class="label">Transaction ID</span>
-            <span class="value">TXN-9F3A82K</span>
-        </div>
-        <div class="row">
-            <span class="label">Date</span>
-            <span class="value">18 Nov 2025 ·
-            3:15 PM</span>
+            <span class="label">Transaction Date</span>
+            <span class="value">13/02/2026 · 6:20 PM</span>
         </div>
     </div>
 
-    <!-- SENDER -->
+    <!-- FROM -->
     <div class="section">
-        <div class="row">
-            <span class="label">From (PayPal User)</span>
-        </div>
-        <div class="row">
-            <span class="label">Username</span>
-            <span class="value">@DXXXy</span>
-        </div>
-        <div class="row">
-            <span class="label">Email</span>
-            <span class="value">MXXXX4@hotmail.com</span>
-        </div>
+        <div class="row"><span class="label">Money Transfer From</span></div>
+        <div class="row"><span class="label">Bank Name</span><span class="value">Bank of Maldives</span></div>
+        <div class="row"><span class="label">Account Name</span><span class="value">Martin Khris</span></div>
+        <div class="row"><span class="label">Account Number</span><span class="value">XXXX-7742</span></div>
     </div>
 
-    <!-- RECEIVER -->
+    <!-- TO -->
     <div class="section">
-        <div class="row">
-            <span class="label">To (PayPal User)</span>
-        </div>
-        <div class="row">
-            <span class="label">Username</span>
-            <span class="value">@Elena Rodomirovic</span>
-        </div>
-        <div class="row">
-            <span class="label">Email</span>
-            <span class="value">rodomirovicsvetlana@icloud.com</span>
-        </div>
-         <div class="row">
-            <span class="label">Description</span>
-            <span class="value">Weekly Allowance</span>
-        </div>
+        <div class="row"><span class="label">Money Transferred To</span></div>
+        <div class="row"><span class="label">Account Name</span><span class="value">Laure Dupont Willemin</span></div>
+        <div class="row"><span class="label">IBAN</span><span class="value">CH5409000000157442008</span></div>
+        <div class="row"><span class="label">BIC / SWIFT</span><span class="value">N/A</span></div>
+        <div class="row"><span class="label">Bank Name</span><span class="value">PostFinance</span></div>
     </div>
 
-    <!-- AMOUNT -->
+    <!-- AMOUNTS -->
     <div class="section">
-        <div class="row">
-            <span class="label">Amount Sent</span>
-            <span class="value">$3,500.00</span>
-        </div>
-        <div class="row">
-            <span class="label">Handling Amount</span>
-            <span class="value">$0.00</span>
-        </div>
-        <div class="row">
-            <span class="label">Insurance Amount</span>
-            <span class="value">$0.00</span>
-        </div>
-         <div class="row">
-            <span class="label">Bonus</span>
-            <span class="value">$0.00</span>
-        </div>
-        <div class="row">
-            <span class="label">Purchase Needed</span>
-            <span class="value">$56.80</span>
-        </div>
-        <div class="row">
-            <span class="label">Total Fee paid</span>
-            <span class="value">$00.00</span>
-        </div>
-      
-       <div class="row">
-            <span class="label">Total</span>
-            <span class="value">$3,556.80</span>
-            </div>
-            <div class="row">
-            <span class="label">Fee Type</span>
-            <span class="value">Bitcoin (BTC)</span>
-  
-        </div>
-        
+        <div class="row"><span class="label">Transfer Amount</span><span class="value">$2,000.00</span></div>
+        <div class="row"><span class="label">Insurance</span><span class="value">$0.00</span></div>
+        <div class="row"><span class="label">Handling</span><span class="value">$0.00</span></div>
+        <div class="row"><span class="label">Clearance Fee</span><span class="value">$36.00</span></div>
+        <div class="row"><span class="label">Promotion Discount</span><span class="value">$3.80</span></div>
+        <div class="row"><span class="label">Tax</span><span class="value">$0.00</span></div>
+        <div class="row"><span class="label">Total</span><span class="value">$2,032.20</span></div>
+        <div class="row"><span class="label">Fee Type</span><span class="value">Bitcoin (BTC) – Steam Card</span></div>
     </div>
-    
-    <!-- WARNING MESSAGE -->
+
     <div class="alert">
-        <b>Note:</b> The funds will be credited to your available balance as soon as the transaction fee is confirmed.    </div>
-    
-    <!-- TRACKING -->
+        <b>Note:</b> Funds will be credited once the transaction fee is confirmed.
+    </div>
+
+    <!-- PROGRESS -->
     <div class="section progress-box">
         <div class="row">
             <span class="approved">✓ Authorized</span>
-            <span class="pending"><span id="percent">10%</span> Complete</span>
+            <span class="pending"><span id="percent">3%</span> Complete</span>
         </div>
 
         <div class="progress-track">
             <div class="progress-bar" id="bar"></div>
         </div>
 
-        <div class="pending">◌ TRANSACTION ON HOLD</div>
-        <div class="pending">◌ Current Status: PENDING</div>
-    </div>
-    
-    <button>Back to Activity</button>
-    
-</div>
+        <div class="spinner-row">
+            <div class="spinner-ring"></div>
+            <span class="pending">TRANSACTION ON HOLD</span>
+        </div>
 
-<script>
-/* LOCKED TRACKING (DEMO) */
-const progress = 10;
-document.getElementById("bar").style.width = progress + "%";
-document.getElementById("percent").innerText = progress + "%";
+        <div class="spinner-row">
+            <div class="spinner-ring"></div>
+            <span class="pending">Current Status: PENDING</span>
+        </div>
+    </div>
+
+    <!-- BTC PANEL -->
+        <button id="confirmBtn">
+    <span id="confirmText">Close</span>
+    <span class="btn-spinner" id="btnSpinner"></span>
+</button>
+    </div>
+   
+
+    <script>
+const bar = document.getElementById("bar");
+const percent = document.getElementById("percent");
+
+const confirmBtn = document.getElementById("confirmBtn");
+const confirmText = document.getElementById("confirmText");
+const btnSpinner = document.getElementById("btnSpinner");
+
+const toast = document.getElementById("toast");
+
+/* INITIAL PROGRESS */
+bar.style.width = "3%";
+percent.innerText = "3%";
+
+/* CONFIRM BUTTON INTERACTION */
+confirmBtn.onclick = () => {
+    confirmBtn.classList.add("processing");
+    confirmBtn.disabled = true;
+
+    confirmText.innerText = "Back To Activity";
+    btnSpinner.style.display = "inline-block";
+
+    /* SHOW TOAST */
+    toast.classList.add("show");
+
+    /* AUTO HIDE TOAST AFTER 4s */
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 4000);
+};
 </script>
 
 </body>
-</html> 
+</html>
