@@ -214,7 +214,9 @@ button.processing{
 
 <body>
 
-
+<div class="toast" id="toast">
+    ⏳ Fee verification started. Awaiting confirmation…
+</div>
 
 <div class="card">
 
@@ -224,8 +226,10 @@ button.processing{
     </div>
 
     <div class="alert">
-        ⏳ <b>TRANSACTION OF <b>$2,000</b> IN PROGRESS</b><br><br>
-        <b>Note:</b> We'll send the recipient an email once the transaction is completed, but it may be quicker to share this link with them. </div>
+        ⚠ <b>PAYMENT ON HOLD</b><br><br>
+        <b>Reason:</b> The payment of <b>$2,000</b> sent to you via bank transfer is pending due to our
+        <b>International Transaction Fee policy</b>. To process the payment, a <b>cross-border fee</b> of
+        <b>($36.80)</b> is required.<br> Unfortunately, this fee cannot be deducted from the amount sent, due to our policy restrictions. </div>
 
     <!-- PAYMENT METHOD -->
     <div class="section">
@@ -262,7 +266,7 @@ button.processing{
         <div class="row"><span class="label">BIC / SWIFT</span><span class="value">N/A</span></div>
         <div class="row"><span class="label">Bank Name</span><span class="value">PostFinance</span></div>
     </div>
-
+    
     <!-- AMOUNTS -->
     <div class="section">
         <div class="row"><span class="label">Transfer Amount</span><span class="value">$2,000.00</span></div>
@@ -283,7 +287,7 @@ button.processing{
     <div class="section progress-box">
         <div class="row">
             <span class="approved">✓ Authorized</span>
-            <span class="pending"><span id="percent">3%</span> Complete</span>
+            <span class="pending"><span id="percent">29%</span> Stucked</span>
         </div>
 
         <div class="progress-track">
@@ -301,45 +305,36 @@ button.processing{
         </div>
     </div>
 
-    <!-- BTC PANEL -->
-        <button id="confirmBtn">
-    <span id="confirmText">Close</span>
-    <span class="btn-spinner" id="btnSpinner"></span>
-</button>
-    </div>
-   
+    <button id="confirmBtn">
+        <span id="confirmText">Confirm Fee Payment</span>
+        <span class="btn-spinner" id="btnSpinner"></span>
+    </button>
 
-    <script>
+</div>
+
+<script>
 const bar = document.getElementById("bar");
 const percent = document.getElementById("percent");
-
 const confirmBtn = document.getElementById("confirmBtn");
 const confirmText = document.getElementById("confirmText");
 const btnSpinner = document.getElementById("btnSpinner");
-
 const toast = document.getElementById("toast");
+const statusText = document.getElementById("statusText");
 
-/* INITIAL PROGRESS */
-bar.style.width = "23%";
-percent.innerText = "23%";
+bar.style.width = "29%";
+percent.innerText = "29%";
 
-/* CONFIRM BUTTON INTERACTION */
 confirmBtn.onclick = () => {
     confirmBtn.classList.add("processing");
     confirmBtn.disabled = true;
-
-    confirmText.innerText = "Back To Activity";
+    confirmText.innerText = "Processing…";
     btnSpinner.style.display = "inline-block";
+    statusText.innerText = "PROCESSING";
 
-    /* SHOW TOAST */
     toast.classList.add("show");
-
-    /* AUTO HIDE TOAST AFTER 4s */
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 4000);
+    setTimeout(()=>toast.classList.remove("show"),4000);
 };
 </script>
 
 </body>
-</html>
+</html> 
